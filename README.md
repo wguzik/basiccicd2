@@ -10,3 +10,6 @@ sed -i 's/your_openweathermap_api_key/<twoj_klucz>/' .env
 
 
 
+bump cicd
+2
+3
