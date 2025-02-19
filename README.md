@@ -20,7 +20,7 @@ CI powinno spełniać wymagania:
 
 Wykonaj fork tego repozytorium (przycisk "Fork" w prawym górnym rogu).
 
-> Więcej o forkowaniu w [dokumentacji GitHub](https://docs.github.com/pl/get-started/quickstart/fork-a-repo).
+> Więcej o forkowaniu w [dokumentacji GitHub](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
 Sklonuj repozytorium na swój komputer lub cloud shell.
 
@@ -77,7 +77,7 @@ W ramach joba `build` wykonujemy następujące kroki:
 - budowanie aplikacji
 - uruchomienie testów
 
-[Dokumentacja jobs](https://docs.github.com/pl/actions/using-jobs)
+[Dokumentacja jobs](https://docs.github.com/en/actions/using-jobs)
 
 `Job` to grupa kroków w workflow, która może być uruchomiona w ramach jednego runnera.
 `Step` to pojedyncza operacja w ramach joba, może być ich kilka. Może to być polecenie konsoli albo `action`.
@@ -141,7 +141,7 @@ Dodaj klucz do GitHub Secrets jako `WEATHER_API_KEY`.
 
 W kolejnym etapie w ramach joba `docker` wykorzystamy ten klucz, po to aby aplikacja działała poprawnie i faktycznie mogła zwrócić pogodę dla `Zakopanego`.
 
-[Dokumentacja GitHub Secrets](https://docs.github.com/pl/actions/security-guides/encrypted-secrets)
+[Dokumentacja GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
 
 ### 2.5 Dodaj testy kontenera
 
@@ -187,7 +187,7 @@ Niektóre zdarzenia mogą być wywołane w zależności od wyniku innych jobów.
         if: always()
         run: docker rm -f weather-app-container
 ```
-[Dokumentacja conditional steps](https://docs.github.com/pl/actions/using-jobs/using-conditions-to-control-job-execution)
+[Dokumentacja conditional steps](https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution)
 
 ## Krok 3 - Testowanie workflow
 
@@ -215,7 +215,7 @@ Upewnij się, że Twój workflow:
 
 Twój pipeline CI jest gotowy do wyłapywania błędów zanim trafią na produkcję!
 
-[Dokumentacja GitHub Actions](https://docs.github.com/pl/actions)
+[Dokumentacja GitHub Actions](https://docs.github.com/en/actions)
 
 ## Struktura Workflow
 
@@ -261,14 +261,8 @@ graph TD
 
 Diagram pokazuje:
 - Workflow zawiera dwa joby: `build` i `docker`
-- Job `docker` zależy od joba `build` (needs)
-- Każdy job składa się z kroków (steps)
-- Niektóre kroki używają predefiniowanych akcji (actions)
+- Job `docker` zależy od joba `build` -> `needs`
+- Każdy job składa się z kroków `steps`
+- Niektóre kroki używają predefiniowanych `actions`
 
-> Więcej o strukturze workflow w [dokumentacji GitHub](https://docs.github.com/pl/actions/learn-github-actions/understanding-github-actions)
-
-
-
-
-
-
+> Więcej o strukturze workflow w [dokumentacji GitHub](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
