@@ -1,6 +1,9 @@
 name: CI weather app
 
 on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -40,7 +43,7 @@ jobs:
         run: |
           docker run -d \
             -p 3000:3000 \
-            -e WEATHER_API_KEY=${{ secrets.testApiKey }} \
+            -e WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }} \
             --name weather-app-container \
             weather-app
           
