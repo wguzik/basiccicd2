@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Weather App</h1>
+    <div class="input-container">
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button onclick="getWeather()">Send</button>
+    </div>
+    <div id="weatherInfo" class="weather-container"></div>
+    <div id="errorInfo" class="error-container"></div>
+
+    <script>
+        async function getWeather() {
+            const cityInput = document.getElementById('cityInput');
+            const weatherInfo = document.getElementById('weatherInfo');
+            const errorInfo = document.getElementById('errorInfo');
+            const city = cityInput.value.trim();
+
+            // Reset displays
+            weatherInfo.style.display = 'none';
+            errorInfo.style.display = 'none';
+
+            if (!city) {
+                showError('Please enter a city name');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/weather/${city}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    weatherInfo.style.display = 'block';
+                    weatherInfo.innerHTML = `
+                        <h2>Weather in ${data.name}</h2>
+                        <p>Temperature: ${data.main.temp}°C</p>
+                        <p>Weather: ${data.weather[0].main}</p>
+                        <p>Description: ${data.weather[0].description}</p>
+                        <p>Humidity: ${data.main.humidity}%</p>
+                    `;
+                } else {
+                    showError(data.error);
+                }
+            } catch (error) {
+                showError('I am tired, boss.');
+            }
+        }
+
+        function showError(message) {
+            const errorInfo = document.getElementById('errorInfo');
+            errorInfo.style.display = 'block';
+            errorInfo.innerHTML = `<p>${message}</p>`;
+        }
+    </script>
+</body>
+</html> 
