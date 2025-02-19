@@ -79,12 +79,11 @@ Trivy to narzędzie, które sprawdza obraz Docker pod kątem podatności.
         run: docker build -t weather-app .
       - uses: aquasecurity/trivy-action@master
         with:
-          scan-type: "fs"
+          image-ref: 'weather-app'
           format: table
-          scan-ref: .
           severity: HIGH,CRITICAL
           ignore-unfixed: true
-          exit-code: 1
+          exit-code: 1 
 ```
 
 ## Krok 2 - Konfiguracja Dependabot
@@ -119,7 +118,6 @@ updates:
    2.  "Dependabot security updates" > "Configure" - zobacz swój workflow
 2. Przejdź do "Settings" > "Code security and analysis"
 
-
 > Dependabot będzie teraz:
 > - Skanował zależności co tydzień
 > - Tworzył PR-y z aktualizacjami bezpieczeństwa
@@ -141,6 +139,10 @@ Przejdź do "Security" > "Code scanning" i zobacz wyniki.
    - Przejdź do Actions
    - Wybierz "Security Scans"
    - Kliknij "Run workflow"
+
+## Krok 4 - Wymuszenie polityk na branchu
+
+Dodaj policy, które wymusza przejście workflow na zielono przed mergem.
 
 ## Weryfikacja
 
