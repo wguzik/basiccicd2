@@ -20,43 +20,31 @@ name: Security Scans
 on:
   schedule:
     - cron: '0 0 * * 1'  # Uruchomienie w każdy poniedziałek o północy
-  workflow_dispatch:      # Możliwość ręcznego uruchomienia
+  workflow_dispatch:     # Możliwość ręcznego uruchomienia
+  pull_request:
+    branches: [ main ]
 ```
 
-### 1.2 Dodaj skanowanie Dependabot
-
-Dependabot to narzędzie, które monitoruje zależności w projekcie i tworzy automatyczne PR-y z aktualizacjami.
-
-```yaml
-jobs:
-  dependabot:
-    name: Dependabot Scan
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dependabot/fetch-metadata@v1.6.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          alert-lookup: true
-          alert-filter: "all"
-```
-
-### 1.3 Dodaj przegląd zależności
+### 1.2 Dodaj przegląd zależności
 
 Dependency review to narzędzie, które sprawdza zależności pod kątem podatności.
 
 ```yaml
+jobs:
   dependency-review:
     name: Dependency Review
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/dependency-review-action@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: high
+          base-ref: ${{ github.event.pull_request.base.sha }}
+          head-ref: ${{ github.event.pull_request.head.sha }}
 ```
 
 ### 1.4 Dodaj skanowanie NPM
@@ -91,13 +79,17 @@ Trivy to narzędzie, które sprawdza obraz Docker pod kątem podatności.
         run: docker build -t weather-app .
       - uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'weather-app'
-          format: 'table'
-          severity: 'CRITICAL,HIGH'
+          scan-type: "fs"
+          format: table
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
 ```
 
 ## Krok 2 - Konfiguracja Dependabot
 
+1. Wybierz "Settings" > "Code security" i wybierz "Dependabot alerts" > "Enable"
 1. Przejdź do zakładki "Security" w repozytorium
 2. Włącz Dependabot alerts
 3. Włącz Dependabot security updates

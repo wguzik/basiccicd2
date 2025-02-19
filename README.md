@@ -42,12 +42,18 @@ Otwórz przeglądarkę i przejdź do strony http://localhost:3000.
 
 1. Utwórz konto na [OpenWeatherMap](https://home.openweathermap.org/)
 2. Pobierz klucz API z [API Keys](https://home.openweathermap.org/api_keys)
+
+Jeżeli chcesz uruchamiać aplikację lokalnie, zrób jeszcze:
+
 3. Utwórz plik .env i wklej swój klucz
 ```bash
 sed -i 's/your_openweathermap_api_key/<twój klucz>/' .env
 ```
 
 ## Krok 2 - Tworzenie workflow CI
+
+Po każdym kroku rób commit i push do repozytorium.
+Następnie przejdź do "Actions" i sprawdź czy uruchamiaj workflow.
 
 Utwórz plik `.github/workflows/ci.yml` i postępuj zgodnie z poniższymi krokami:
 

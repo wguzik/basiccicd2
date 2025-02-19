@@ -4,28 +4,14 @@ on:
   schedule:
     - cron: '0 0 * * 1'  # Run weekly on Monday at 00:00
   workflow_dispatch:      # Allow manual triggers
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  dependabot:
-    name: Dependabot Scan
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: Dependabot Alert Check
-        uses: dependabot/fetch-metadata@v1.6.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          alert-lookup: true
-          alert-filter: "all"
-
   dependency-review:
     name: Dependency Review
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,6 +20,8 @@ jobs:
         uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: high
+          base-ref: ${{ github.event.pull_request.base.sha }}
+          head-ref: ${{ github.event.pull_request.head.sha }}
           
   npm-audit:
     name: NPM Audit
@@ -65,6 +53,9 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'weather-app'
-          format: 'table'
-          severity: 'CRITICAL,HIGH' 
+          scan-type: "image"
+          format: table
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1 
