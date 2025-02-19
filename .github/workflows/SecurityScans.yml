@@ -53,7 +53,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: "image"
+          scan-type: "fs"
           format: table
           scan-ref: .
           severity: HIGH,CRITICAL

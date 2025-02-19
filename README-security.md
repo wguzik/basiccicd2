@@ -114,17 +114,27 @@ updates:
 
 ### 2.2 Włącz Dependabot w repozytorium
 
-1. Wybierz "Settings" > "Code security" i wybierz "Dependabot alerts" > "Enable"
+1. Wybierz "Settings" > "Code security" i wybierz:
+   1.  "Dependabot alerts" > "Enable"
+   2.  "Dependabot security updates" > "Configure" - zobacz swój workflow
 2. Przejdź do "Settings" > "Code security and analysis"
-3. Włącz:
-   - Dependabot alerts
-   - Dependabot security updates
-   - Dependency graph
+
 
 > Dependabot będzie teraz:
 > - Skanował zależności co tydzień
 > - Tworzył PR-y z aktualizacjami bezpieczeństwa
 > - Monitorował npm, Docker i GitHub Actions
+
+## Code QL
+
+Włącz CodeQL w repozytorium:
+
+1. Wybierz "Settings" > "Code security and analysis"
+2. Włącz "Code scanning alerts"
+3. Włącz "CodeQL analysis"
+
+Przejdź do "Security" > "Code scanning" i zobacz wyniki.
+
 
 ## Krok 3 - Testowanie
 
@@ -141,4 +151,4 @@ Upewnij się, że:
 - [x] NPM Audit sprawdza zależności Node.js
 - [x] Trivy skanuje obraz Docker
 
-> Więcej o bezpieczeństwie w GitHub Actions w [dokumentacji](https://docs.github.com/en/code-security) 
+> Więcej o bezpieczeństwie w GitHub Actions w [dokumentacji](https://docs.github.com/en/code-security).
