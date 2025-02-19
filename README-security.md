@@ -89,10 +89,42 @@ Trivy to narzędzie, które sprawdza obraz Docker pod kątem podatności.
 
 ## Krok 2 - Konfiguracja Dependabot
 
+### 2.1 Dodaj plik konfiguracyjny
+
+Utwórz plik `.github/dependabot.yml`:
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+```
+
+### 2.2 Włącz Dependabot w repozytorium
+
 1. Wybierz "Settings" > "Code security" i wybierz "Dependabot alerts" > "Enable"
-1. Przejdź do zakładki "Security" w repozytorium
-2. Włącz Dependabot alerts
-3. Włącz Dependabot security updates
+2. Przejdź do "Settings" > "Code security and analysis"
+3. Włącz:
+   - Dependabot alerts
+   - Dependabot security updates
+   - Dependency graph
+
+> Dependabot będzie teraz:
+> - Skanował zależności co tydzień
+> - Tworzył PR-y z aktualizacjami bezpieczeństwa
+> - Monitorował npm, Docker i GitHub Actions
 
 ## Krok 3 - Testowanie
 
@@ -101,11 +133,6 @@ Trivy to narzędzie, które sprawdza obraz Docker pod kątem podatności.
    - Wybierz "Security Scans"
    - Kliknij "Run workflow"
 
-2. Sprawdź wyniki w:
-   - Zakładce Security > Dependabot
-   - Zakładce Pull requests (automatyczne PR-y)
-   - Logach workflow w Actions
-
 ## Weryfikacja
 
 Upewnij się, że:
@@ -113,6 +140,5 @@ Upewnij się, że:
 - [x] Dependabot wykrywa podatności
 - [x] NPM Audit sprawdza zależności Node.js
 - [x] Trivy skanuje obraz Docker
-- [x] Tworzone są automatyczne PR-y z poprawkami
 
 > Więcej o bezpieczeństwie w GitHub Actions w [dokumentacji](https://docs.github.com/en/code-security) 
