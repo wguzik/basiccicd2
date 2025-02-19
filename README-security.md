@@ -69,6 +69,8 @@ Skanowanie NPM to narzędzie, które sprawdza zależności pod kątem podatnośc
 
 Trivy to narzędzie, które sprawdza obraz Docker pod kątem podatności.
 
+Wymuś błąd jeśli zostanie znaleziony obraz z podatnościami, zobacz w dokumentacji [Trivy](https://github.com/aquasecurity/trivy-action).
+
 ```yaml
   docker-scan:
     name: Docker Image Scan
