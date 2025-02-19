@@ -135,7 +135,6 @@ Włącz CodeQL w repozytorium:
 
 Przejdź do "Security" > "Code scanning" i zobacz wyniki.
 
-
 ## Krok 3 - Testowanie
 
 1. Uruchom workflow ręcznie:
