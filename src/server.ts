@@ -8,6 +8,8 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+const password="passw0rd";
+
 app.use(express.json());
 app.use(express.static('public'));
 
